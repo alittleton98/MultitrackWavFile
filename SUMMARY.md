@@ -1,3 +1,4 @@
 # Table of contents
 
-* [Page 1](README.md)
+* [Multitrack Wav File](README.md)
+* [Appendix](appendix.md)
