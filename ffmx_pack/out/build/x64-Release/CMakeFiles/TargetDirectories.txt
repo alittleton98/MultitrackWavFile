@@ -1,0 +1,3 @@
+D:/Users/Mordecai/Dev/Research/MultitrackWavFile/ffmx_pack/out/build/x64-Release/CMakeFiles/edit_cache.dir
+D:/Users/Mordecai/Dev/Research/MultitrackWavFile/ffmx_pack/out/build/x64-Release/CMakeFiles/ffmx_pack.dir
+D:/Users/Mordecai/Dev/Research/MultitrackWavFile/ffmx_pack/out/build/x64-Release/CMakeFiles/rebuild_cache.dir
