@@ -1,4 +1,9 @@
-// Header file for the .tbwav type. RIFF based
+/*
+Header file for the.mtwv type.RIFF based.
+File format is meant to be similar to the WAVE format, but includes multiple "tracks".
+A "track" in this case, is a container for one or multiple channels of audio with a defined location in the soundfield (ie. Left, Right, Center, etc.) 
+*/ 
+
 #pragma once
 #include "common.h"
 
@@ -14,62 +19,27 @@ typedef DWORD FOURCC;
 
 typedef struct 
 {
-	FOURCC chunk_id;
-	DWORD chunk_size;
-	BYTE *chunk_data; 
-} CHUNK;
-
-typedef struct
-{
-	FOURCC chunk_id;
-	DWORD chunk_size;
-	union 
-	{
-		FOURCC fccType;
-		BYTE *chunk_Data;
-	} riff_chunk_data;
-} RIFF_CHUNK;
-
-class MultitrackWav 
-{
-
-private:
-	RIFF_CHUNK riff_chunk;
-	CHUNK format_chunk;
-	CHUNK data_chunk;
-
-
-
-
-public:
-	MultitrackWav() 
-	{
-		riff_chunk = GenerateRIFFChunk();
-		
-	}
+	// RIFF Chunk
+	BYTE riff_chunk_id; // RIFF
+	union riff_chunk_size { DWORD file_size; };
+	BYTE riff_formatchunk_id; // MTWV 
 	
-	RIFF_CHUNK GenerateRIFFChunk() 
-	{
-		RIFF_CHUNK generated;
-		generated.chunk_id = RIFF_FOURCC;
-		generated.riff_chunk_data.fccType = MULTITRACK_WAVE_FOURCC;
-	}
+	// format chunk 
+	BYTE format_chunk_id; // 'fmt'
+	union format_chunk_size { DWORD format_header_size; }; // size of the format header chunk
+	union track_channel_count { int nChannels; }; // number of channels to be accounted for 
+	union track_count { int nTracks; }; // number of "tracks" packed within the file
+	union track_sample_rate { DWORD IntendedSamplesPerSecond; }; // number of samples that are to be read for each track
+	union file_sample_rate { DWORD TotalSamplesPerSecond; }; // number of total samples read per second. Should be track_sample_rate * track_count * track_channel_count, but should NOT exceed 192000 
+	union file_data_rate { DWORD TotalBytesPerSecond; }; // total bytes read per second by the device
+	union track_block_alignment { int IntendedBlockSize; }; // block size per track in bytes
+	union file_block_alignment { int TotalBlockSize; }; // block size for all tracks read
+	union bit_depth { int nBitsPerSample; }; // Number of bits per sample. This is agnostic of either sample rate
 
+	// data chunk
+	BYTE data_chunk_id; // 'data'
 	
-	CHUNK CreateFormatChunk(int format, int nChannels, float nSamplesPerSecond, float nBytesPerSecond, int nBlockAlignment, int bitdepth)
-	{
-		CHUNK generated;
-		generated.chunk_id = 'fmt';
-		generated.chunk_size = 16;
-		generated.chunk_data = (BYTE*) malloc(generated.chunk_size);
-		// TODO: Write format chunk
-	}
+	
+} mtwv_header;
 
-	DWORD CalculateChunkSizes() 
-	{
-		// returns the size of necessary data chunks
-		DWORD TotalFileSize = 0;
-		DWORD PCMDataSize = 0;
-	}
-	
-};
+

@@ -1,5 +1,4 @@
-﻿// ffmx_pack.h : Include file for standard system include files,
-// or project specific include files.
+﻿// Header for the Full Fidelity Mix Packager
 
 #pragma once
 

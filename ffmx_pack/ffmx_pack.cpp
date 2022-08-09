@@ -1,5 +1,5 @@
 ﻿// ffmx_pack.cpp : Defines the entry point for the application.
-//
+
 
 #include "ffmx_pack.h"
 

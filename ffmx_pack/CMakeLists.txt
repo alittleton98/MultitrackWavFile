@@ -9,4 +9,4 @@ project ("ffmx_pack")
 add_executable (ffmx_pack "ffmx_pack.cpp" "ffmx_pack.h")
 
 include_directories("/include")
-# TODO: Add tests and install targets if needed.
+
