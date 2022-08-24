@@ -27,6 +27,7 @@ typedef struct
 	// format chunk 
 	BYTE format_chunk_id; // 'fmt'
 	union format_chunk_size { DWORD format_header_size; }; // size of the format header chunk
+	BYTE format_type;
 	union track_channel_count { int nChannels; }; // number of channels to be accounted for 
 	union track_count { int nTracks; }; // number of "tracks" packed within the file
 	union track_sample_rate { DWORD IntendedSamplesPerSecond; }; // number of samples that are to be read for each track
@@ -38,8 +39,17 @@ typedef struct
 
 	// data chunk
 	BYTE data_chunk_id; // 'data'
-	
+	union data_chunk_size { DWORD data_chunk_size; };
+	// Any bits after this shall be considered audio data.
 	
 } mtwv_header;
 
+// Creates file at path with header chunks
+FILE CreateMTWVNative(BYTE format_type, int nChannels, int nTracks, DWORD IntendedSamplesPerSecond, string path)
+{
+	FILE mtwvFIle;
+	mtwv_header header;
+	ofstream untitledMTWV;
+	// TODO: Write header chunk information to file calculated from parameters
+}
 
